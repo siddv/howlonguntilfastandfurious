@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Fast 9 Countdown</title>
+<link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Russo One', sans-serif;
+  font-style: italic;
+}
+
+body {
+  background: linear-gradient(135deg, rgb(247, 157, 0), rgb(100, 243, 140));
+  color: #242424;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  padding: 40px;
+}
+
+h1 {
+  margin-bottom: 20px
+}
+
+.timer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.number {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .timer {
+    flex-direction: row;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>Fast &amp; Furious 9 hits the big screen in:</h1>
+  <section class="timer">
+    <div>
+      <span class="number" id="day"></span>
+      <span>days<span>
+    </div>
+    <div>
+      <span class="number" id="hour"></span>
+      <span>hours<span>
+    </div>
+    <div>
+      <span class="number" id="minute"></span>
+      <span>minutes<span>
+    </div>
+     <div>
+      <span class="number" id="second"></span>
+      <span>seconds<span>
+    </div>
+  </section>
+</main>
+<script>
+var measures = {
+  day: 86400000,
+  hour: 3600000,
+  minute: 60000,
+  second: 1000,
+}
+
+var releaseDate = new Date('Sep 30, 2019 00:00:00').getTime()
+
+var timer = setInterval(function() {
+  var now = new Date().getTime();
+  var timeLeft = releaseDate - now;
+  var previous = null;
+  
+  for(var measure in measures) {
+    console.log('measure', measure)
+    var calculation = timeLeft / measures[measure]
+
+    if(previous !== null) {
+      calculation = (timeLeft % previous) / (measures[measure])
+    }
+
+    document.getElementById(measure).innerText = Math.floor(calculation)
+    previous = measures[measure]
+  }
+}, measures.second)
+</script>
+</body>
